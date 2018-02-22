@@ -13,18 +13,17 @@ class AutoLoader extends MyObject {
 // an unknown class name in the source code
 	private function load($className) {
 		
-		$paths = array ('/classes/', '/model', '/controller/', '/view/');
+		$files = array ('/classes/', '/model', '/controller/', '/view/');
 		
-        $i=0;
-        while($i<count($paths)-1){
-
-		
-		  if (is_readable(__ROOT_DIR . $paths[$i]. ucfirst($className) . '.class.php')){
-			 require_once(__ROOT_DIR . $paths[$i] . ucfirst($className) . '.class.php');
-		  }
-         $i++;
-	   }
-    }
+		$i = 0;
+		while ($i <= count($files) - 1) {
+			$path = __ROOT_DIR . $files[$i] . ucfirst($className) . '.class.php';
+			if (is_readable($path)){
+				require_once($path);
+			}
+			$i++;
+		}
+	}
 }
 
 $__LOADER = new AutoLoader();

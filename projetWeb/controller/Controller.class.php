@@ -2,21 +2,19 @@
 
 abstract class Controller Extends MyObject {
 	
-    protected $request ;
+	protected $_request; 
+	
 	public function __construct($request){
-        $this->request = $request;
-    }
+		$this->_request=$request;
+	}
 	
 	public abstract function defaultAction($request);
 	
 	public function execute(){
-        $methodName = $this->request->getActionName();
-        $this->$methodName($this->request);
-	
+		$methodeName = $this->_request->getActionName();
+		$this->$methodeName($this->_request);
 	}
 	
-	
-
 }
 
 ?>

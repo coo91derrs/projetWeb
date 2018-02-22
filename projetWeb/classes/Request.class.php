@@ -2,9 +2,9 @@
 
 class Request Extends MyObject {
 	
-	private static $_request;
+	protected static $_request;
 	
-	private function __construct(){}
+	protected function __construct(){}
 	
 	public static function getCurrentRequest(){
 		if (is_null(self::$_request)){
@@ -13,7 +13,7 @@ class Request Extends MyObject {
 		return self::$_request;
 	}
 	
-	public static function getControllerName(){
+	public function getControllerName(){
 		if (isset($_GET['controller'])){
 			return $_GET['controller'];
 		}
@@ -22,12 +22,12 @@ class Request Extends MyObject {
 		}
 	}
 	
-	public static function getActionName(){
+	public function getActionName(){
 		if (isset($_GET['action'])){
 			return $_GET['action'];
 		}
 		else {
-            return'defaultAction';
+			return 'defaultAction';
 		}
 	}
 
