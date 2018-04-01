@@ -2,15 +2,13 @@
 
 class Request Extends MyObject {
 	
-	protected static $_request;
-	
-	protected function __construct(){}
+	protected static $_singleton=NULL;
 	
 	public static function getCurrentRequest(){
-		if (is_null(self::$_request)){
-			self::$_request = new Request();
+		if (is_null(static::$_singleton)){
+			static::$_singleton = new static();
 		}
-		return self::$_request;
+		return static::$_singleton;
 	}
 	
 	public function getControllerName(){
@@ -30,6 +28,36 @@ class Request Extends MyObject {
 			return 'defaultAction';
 		}
 	}
+    
+    public function readPOST($param){
+		if (isset($_POST[$param])){
+			return $_POST[$param];
+		}
+	}
+	
+	public function readGET($param){
+		if (isset($_GET[$param])){
+			return $_GET[$param];
+		}
+	}
+	
+	public function writeOnPOST($key, $value){
+		$_POST[$key]=$value;
+    }
+	
+	public function writeOnGET($key, $value){
+		$_GET[$key]=$value;
+    }
+	
+	
+    /*public function debug() {
+		echo "Request Parameters : \nGET=";
+		print_r($_GET);
+		echo "\nPOST=";
+		print_r($_POST);
+		echo "\n";
+	} */
+    
 
 }
 

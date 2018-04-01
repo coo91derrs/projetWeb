@@ -13,17 +13,32 @@ class AutoLoader extends MyObject {
 // an unknown class name in the source code
 	private function load($className) {
 		
-		$files = array ('/classes/', '/model', '/controller/', '/view/');
-		
+		//$this->log(__CLASS__ . ' load: '. $className);
+        $paths = array( '/classes/', '/model/', '/controller/', '/view/', '/sql/' );
+		$fileToLoad = null;
 		$i = 0;
-		while ($i <= count($files) - 1) {
-			$path = __ROOT_DIR . $files[$i] . ucfirst($className) . '.class.php';
-			if (is_readable($path)){
-				require_once($path);
-			}
+		
+		do {
+			$fileToLoad = __ROOT_DIR . $paths[$i] . ucfirst($className) . '.class.php';
 			$i++;
-		}
+		} while(!is_readable($fileToLoad) && $i<count($paths));
+		
+		if(! is_readable($fileToLoad)){
+			throw new Exception('Unknown class '.$className);
+        }
+        else{
+            require_once($fileToLoad);
+            if($paths[$i-1]=='/model/'){
+                $sqlFichier=__ROOT_DIR . '/sql/'. ucfirst($className) . '.sql.php';
+                
+                require_once($sqlFichier);
+                
+            }
+        }
+		
+		
 	}
+
 }
 
 $__LOADER = new AutoLoader();

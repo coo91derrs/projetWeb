@@ -11,9 +11,12 @@ abstract class Controller Extends MyObject {
 	public abstract function defaultAction($request);
 	
 	public function execute(){
-		$methodeName = $this->_request->getActionName();
-		$this->$methodeName($this->_request);
+		$methodName = $this->_request->getActionName();	
+		$this->$methodName($this->_request);
 	}
+	
+	
+	
 	
 }
 

@@ -3,11 +3,12 @@
 class Dispatcher Extends MyObject {
 	
 	public static function dispatch($request){
-		$contructName = ucfirst($request->getControllerName()) . 'Controller';
-		$controller = new $contructName($request);
-		return $controller;
+		$controllerClassName = ucfirst($request->getControllerName()) . 'Controller';
+		if(!class_exists($controllerClassName))
+			throw new Exception("$controllerName does not exists");
+		return new $controllerClassName($request);
 	}
-
+	
 }
 
 ?>
